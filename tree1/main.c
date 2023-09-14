@@ -15,6 +15,8 @@ Node* initNode(int data, Node* leftChild, Node* rightChild) {
     return node;
 }
 
+int arrayIndex=1;
+
 void preorder(Node* root) {
     if (root) {
         printf("%d ", root->data);
@@ -40,6 +42,69 @@ void postorder(Node* root) {
     }
 }
 
+void preorderArray(int tree[],int nowIndex) {
+    //treeA=tree[1]; 픽스
+    int z = tree[nowIndex];
+ 
+    if (z != -1 && nowIndex<16 && nowIndex >0) {
+       
+        printf("%d  ", tree[nowIndex]);
+        printf("nowIndex: %d\n  ", nowIndex);
+        nowIndex = nowIndex * 2;
+        preorderArray(tree,nowIndex);
+        nowIndex++;
+        preorderArray(tree,nowIndex);
+       }
+    
+
+    
+}
+
+void inorderArray(int tree[], int nowIndex) {
+    //treeA=tree[1]; 픽스
+    int z = tree[nowIndex];
+    int index = nowIndex;// 2*i 값으로 저장되기전의 값 
+
+    if (z != -1 && nowIndex < 16 && nowIndex >0) {
+
+       
+     
+        nowIndex = nowIndex * 2;
+        inorderArray(tree, nowIndex);
+        printf("%d  ", tree[index]);
+        printf("Index: %d\n  ", index);
+        nowIndex++;
+        inorderArray(tree, nowIndex);
+
+    }
+
+
+
+}
+
+void postorderArray(int tree[], int nowIndex) {
+    //treeA=tree[1]; 픽스
+    int z = tree[nowIndex];
+    int index = nowIndex;// 2*i값이나 (2*n)+1 값으로 저장되어 넘어가기전의 값 
+
+    if (z != -1 && nowIndex < 16 && nowIndex >0) {
+
+
+
+        nowIndex = nowIndex * 2;
+        postorderArray(tree, nowIndex);
+     
+        nowIndex++;
+        postorderArray(tree, nowIndex);
+        printf("%d  ", tree[index]);
+        printf("Index: %d\n  ", index);
+
+    }
+
+
+
+}
+
 int main(void) {
     Node* n15 = initNode(11, NULL, NULL);
     Node* n14 = initNode(10, NULL, NULL);
@@ -53,6 +118,11 @@ int main(void) {
     Node* n2 = initNode(2, n4, n5);
     Node* n1 = initNode(1, n2, n3);
 
+  
+
+    int tree[16] = {-1,1,2,7,3,6,8,9,4,5,-1,-1,-1,-1,10,11};
+  
+
     printf("<Linked Tree>\n");
     printf("전위\n");
     preorder(n1);
@@ -63,4 +133,23 @@ int main(void) {
     printf("후위\n");
     postorder(n1);
     printf("\n");
+
+
+
+    printf("<Array Tree>\n");
+    printf("전위\n");
+    preorderArray(tree,1);
+
+    printf("중위\n");
+    inorderArray(tree, 1);
+
+
+    printf("후위\n");
+    postorderArray(tree, 1);
+
+
+
+
+
+
 }
